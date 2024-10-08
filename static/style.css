@@ -1,0 +1,485 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,700&display=swap');
+/* for slider */
+#slider {
+  overflow: hidden;
+}
+#slider figure {
+  position: relative;
+  width: 500%;
+  margin: 0;
+  left: 0;
+  animation: 10s slider infinite;
+}
+#slider figure img {
+  float: left;
+  width: 20%;
+}
+@keyframes slider {
+  0%{
+    left: 0%;
+  }
+  20%{
+    left: 0%;
+  }
+  25%{
+    left:-100%;
+  }
+  45%{
+    left:-100%;
+  }
+  50%{
+    left:-200%;
+  }
+  70%{
+    left:-200%;
+  }
+  75%{
+    left:-300%;
+  }
+}
+/* padding is use for inside and margine is you for outside*/
+/* '*Stark is used to Slect All' */
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+  font-family: 'Roboto', sans-serif;
+  text-decoration: none;
+}
+
+nav {
+  position: fixed;
+  width: 100%;
+  height: 48px;
+  background: #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 40px 20px;
+  z-index: 1;
+  top: 0;
+}
+
+nav .logo p {
+  font-size: 30px;
+  font-weight: bold;
+  color: #adadad;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: 0.5s;
+}
+
+nav .logo p span:hover {
+  color: #f5f5f7;
+}
+
+nav .search {
+  margin: 0 20px;
+  display: flex;
+  justify-content: center;
+  margin-top: 30px;
+}
+
+nav .search input[type="search"] {
+  width: 100%;
+  max-width: 200px;
+  padding: 10px 10px;
+  border: none;
+  border-radius: 3px;
+  font-size: 16px;
+}
+
+
+nav ul {
+  list-style: none;
+  display: flex;
+  margin: 0;
+}
+
+nav ul li {
+  margin: 0 10px;
+}
+
+nav ul li a {
+  font-weight: 300;
+  color: #adadad;
+  transition: 0.5s;
+}
+
+nav ul li a:hover {
+  color: #f5f5f7;
+}
+
+nav ul li a.active {
+  background-color: #f5f5f7;
+  color: #000;
+  font-size: 1.2em;
+  padding: 10px 20px;
+  border-radius: 5px;
+  transition: 0.3s ease;
+}
+
+/*--- before welcome dot. is compulsory---*/
+.welcome {
+  width: 100%;
+  height: 500px;
+  background-image:url("/static/b6.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.welcome h1 {
+  color: #050101;
+  font-weight: 300;
+  font-size: 2rem;
+}
+
+/*--- section product is Used to Call  ---*/
+.product-mac,
+.product-iphone,
+.product-watch,
+.product-ipad {
+  width: 100%;
+  height: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 50px 0;
+  cursor: pointer;
+}
+.product-mac h2,
+.product-iphone h2,
+.product-watch h2,
+.product-ipad h2 {
+  font-size: 2rem;
+  font-weight: 300;
+  margin-bottom: 20px;
+}
+.container {
+  width: 1070px;
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+/*--- grid is Used to Call  ---*/
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 15px;
+}
+.grid-product {
+  background: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transition: .5s;
+}
+.grid-product:hover {
+  background: #e1e1e1;
+}
+.grid-product img {
+  width: 300px;
+}
+.grid-detail {
+  margin: 20px 0;
+  text-align: center;
+}
+.grid-detail p:last-child {
+  transition: .5s;
+  margin-top: 10px;
+}
+.grid-product:hover > .grid-detail p:last-child {
+  color: #3498db;
+}
+
+/*---gridfull is Used to Call----*/
+.grid-full {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 10px;
+}
+.grid-product-full {
+  background: #f1f1f1;
+  grid-column: span 3;
+  display: flex;
+  position: relative;
+}
+.grid-detail-sum {
+  position: absolute;
+  top: 35%;
+  right: 12%;
+  text-align: center;
+}
+.grid-detail-sum h2 {
+  font-size: 3rem;
+  font-weight: 500;
+}
+.grid-detail-sum p {
+  margin: 20px 0;
+}
+.grid-detail-sum a {
+  color: #3498db;
+}
+.grid-detail-sum a:hover {
+  text-decoration: underline;
+}
+ /*--- footer ---*/
+ footer {
+  width: 100%;
+  height: 500px;
+  background: #f1f1f1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.footer-main {
+  width: 1070px;
+}
+.footer-detail {
+  font-size: .7rem;
+  color: #95a5a6;
+  padding: 20px 0;
+  border-bottom: 1px solid #bdc3c7;
+}
+.footer-detail a {
+  color: #2c3e50;
+}
+.footer-detail a:hover {
+  text-decoration: underline;
+}
+.footer-welcome {
+  display: flex;
+  margin: 20px 0;
+  font-size: .8rem;
+  color: #34495e;
+}
+.footer-welcome i {
+  margin-right: 10px;
+}
+.footer-ul {
+  display: flex;
+  justify-content: space-between;
+}
+.footer-ul ul {
+  list-style: none;
+}
+.footer-ul ul li {
+  margin: 7px 0;
+}
+.footer-ul ul li h4 {
+  color: #34495e;
+  font-size: .7rem;
+}
+.footer-ul ul li a {
+  color: #7f8c8d;
+  font-size: .7rem;
+}
+.footer-ul ul li a:hover {
+  text-decoration: underline; 
+}
+#mt {
+  padding-top: 30px;
+}
+.footer-contact {
+  border-bottom: 1px solid #bdc3c7;
+  padding: 12px 0;
+  margin: 10px 0;
+  color: #7f8c8d;
+  font-size: .7rem;
+}
+.footer-contact a {
+  color: #3498db;
+}
+.footer-contact a:hover {
+  text-decoration: underline;
+}
+.footer-copyright {
+  color: #7f8c8d;
+  font-size: .7rem;
+  display: flex;
+  justify-content: space-between;
+}
+.footer-copyright ul {
+  display: flex;
+  list-style: none;
+  width: auto;
+}
+.footer-copyright ul li {
+  margin: 0 10px;
+}
+.footer-copyright ul li a {
+  color: #7f8c8d;
+}
+.footer-copyright ul li a:hover {
+  text-decoration: underline; 
+}
+.vr {
+  height: 15px;
+  width: 1px;
+  background: #bdc3c7;
+}
+.footer-lang {
+  display: flex;
+}
+.footer-lang p {
+  margin: 0 10px;
+}
+.circle {
+  width: 15px;
+  height: 15px;
+}
+.circle img {
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  border-radius: 50%;
+  
+}
+/*---iphone photo  ---*/
+.speed {
+  width: 100%;
+  height: 500px;
+  background-image: url("iphone.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+}
+.speed h1 {
+  color: #050101;
+  font-weight: 300;
+  font-size: 2rem;
+  margin-left: 65%;
+  margin-top: 14%;
+}
+
+/*--- the Best selling product Photo ---*/
+.iphone {
+  width: 100%;
+  height: 500px;
+  background-image: url("https://www.apple.com/v/iphone/home/bn/images/overview/retail/trade_in__elbczdpbk06e_large.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  
+}
+.iphone h1 {
+  color: #050101;
+  font-weight: 300;
+  font-size: 2rem;
+  margin-top: 15%;
+  margin-left: 22%;
+}
+
+/*--- for contact ---*/
+*,*:after,*:before{
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  -ms-box-sizing:border-box;
+  box-sizing: border-box;
+}
+.contact{
+  max-width: 350px;
+  margin-top: 10%;
+  margin-bottom: 10%;
+  margin-left: 40%;
+  padding: 50px;
+  border-radius: 15px;
+}
+.but{
+  background-color: #f6faf6;
+  border: none;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 10px;
+}
+.row{
+  flex-flow: wrap;
+  margin: 0 -15px;
+}
+input,textarea{
+  width:100%;
+  padding:15px 20px;
+  margin: 0 0 30px;
+  font-family: arial;
+  background-color: #fbfbfb;
+  border-radius: 3px;
+  font-size:16px;
+  border:0;
+}
+textarea{
+  height:150px;
+  resize:none;
+
+}
+input[type="submit"]{
+  display: block;
+  margin:0 auto;
+  width:150px;
+  text-align: center;
+  cursor:pointer;
+  background-color: rgb(246, 246, 250);
+  font-size: 18px;
+  color: #fff;
+
+
+}
+/* services */
+*{
+  padding:0;
+  margin:0;
+}
+.part{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+ 
+}
+.part div{
+  margin: 60px;
+  text-align: center;
+  font-size: 30px;
+  font-family: sans-serif;
+  
+
+
+}
+.part div img{
+  width: 300px;
+}
+
+/* product image  */
+figure.zoom {
+  & img:hover {
+    opacity: 0;
+  }
+  img {
+    transition: opacity .5s;
+    display: block;
+    width: 500px;
+  }
+  background-position: 50% 50%;
+  position: relative;
+  width: 500px;
+  overflow: hidden;
+  cursor: zoom-in;
+}
+
+
+
+
+
+
+
+
+
+
+

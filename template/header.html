@@ -1,0 +1,421 @@
+{% load static %}
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" href="/static/logo.jpg">
+        <link rel="stylesheet" href="/static/style.css">  
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+        <title>RM Mobile Hub</title>
+        <style>
+            /* Inline CSS for the dropdown menu */
+            .dropdown {
+                position: relative;
+                display: inline-block;
+            }
+    
+            .dropdown-content {
+                display: none;
+                position: absolute;
+                background-color: #f9f9f9;
+                min-width: 160px;
+                box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+                z-index: 1;
+            }
+    
+            .dropdown-content a {
+                color: black;
+                padding: 12px 16px;
+                text-decoration: none;
+                display: block;
+            }
+    
+            .dropdown-content a:hover {
+                background-color: #f1f1f1;
+            }
+    
+            .dropdown:hover .dropdown-content {
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <nav>
+            <div class="logo">
+                <p><span>RM Mobile Hub</span></p>
+            </div>
+         
+            <ul>
+                <li><a class="{% if request.path == '/welcome/' %}active{% endif %}" href="{% url 'welcome' %}">Home</a></li>
+                <li><a class="{% if request.path == '/product/' or request.path == '/product_detail/' %}active{% endif %}" href="{% url 'product' %}">Product</a></li>
+                <li><a class="{% if request.path == '/category/' or request.path == '/category_product_list/' %}active{% endif %}" href="{% url 'category' %}">Category</a></li>
+                <li><a class="{% if request.path == '/brand/' or request.path == '/brand_product_list/' %}active{% endif %}" href="{% url 'brand' %}">Brand</a></li>
+                <li><a class="{% if request.path == '/about/' %}active{% endif %}" href="{% url 'about' %}">About Us</a></li>
+                <li><a class="{% if request.path == '/form/' %}active{% endif %}" href="{% url 'form' %}">Contact Us</a></li>
+            </ul>
+            
+            <form class="search">
+                <input class="sea" type="search" placeholder="search..." aria-label="search" id="searchInput">
+            </form>
+
+            <div class="profile-menu">
+                {% if user.is_authenticated %}
+                <ul style="list-style-type: none; padding: 0; margin-right: 30px;">
+                    <li class="dropdown" style="margin-right:20px;">
+                        <a href="javascript:void(0)" style="color: white; text-decoration: none;">
+                            <i class="fa-solid fa-user" style="font-size: 30px;"></i>
+                        </a>
+                        <div class="dropdown-content">
+                            <a href="{% url 'profile' %}">{{ user.username }}</a>
+                            <a href="{% url 'logout' %}">Logout</a>
+                        </div>
+                    </li>
+                    <li class="cart-icon">
+                        <a href="{% url 'cart_view' %}"><i class="fa fa-shopping-cart" style="color:white; font-size: 30px;"></i></a>
+                        <span class="cart-count" id="cart-count">0</span>
+                    </li>
+                </ul>
+                {% else %}
+                    <ul>
+                        <li><a href="{% url 'login' %}">Login</a></li>
+                        <li><a href="{% url 'signup' %}">Sign Up</a></li>
+                    </ul>
+                {% endif %}
+            </div>
+        </nav>
+    </body>
+</html>
+
+    {% comment %} for whatsapp connect {% endcomment %}
+    <script>
+    
+        function welcome()
+        {
+          window.open("https://Wa.me/+923274450102")
+        }
+    </script>
+    {% comment %} for search function {% endcomment %}
+    <script>
+        document.getElementById("searchInput").addEventListener("keyup", function() {
+            var value = this.value.toLowerCase();
+            var elements = document.getElementsByClassName("searching");
+            var found = false;
+            Array.prototype.forEach.call(elements, function(element) {
+                var text = element.textContent.toLowerCase();
+                if (text.indexOf(value) > -1) {
+                    element.style.display = "";
+                    if (!found) {
+                        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                        found = true;
+                    }
+                } 
+            });
+        });
+        
+    </script>
+    {% comment %} for load more function {% endcomment %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            document.getElementById('loadMore').addEventListener('click', function() {
+                var currentProducts = document.querySelectorAll('.product-box').length;
+                var limit = this.getAttribute('data-limit');
+                var total = this.getAttribute('data-total');
+        
+                // Start Ajax
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', '/load-more-data?limit=' + limit + '&offset=' + currentProducts, true);
+                xhr.responseType = 'json';
+        
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            var res = xhr.response;
+                            var filteredProducts = document.getElementById('more-product');
+                            filteredProducts.insertAdjacentHTML('beforeend', res.data);
+        
+                            document.getElementById('loadMore').disabled = false;
+                            document.querySelector('.load-more-icon').classList.remove('fa-spin');
+        
+                            var totalShowing = document.querySelectorAll('.product-box').length;
+                            if (totalShowing == total) {
+                                document.getElementById('loadMore').remove();
+                            }
+                        }
+                    }
+                };
+        
+                xhr.onloadstart = function() {
+                    document.getElementById('loadMore').disabled = true;
+                    document.querySelector('.load-more-icon').classList.add('fa-spin');
+                };
+        
+                xhr.send();
+                // End
+            });
+        });
+        </script>
+{% comment %} use for add to cart funtion and funtion whose perfom in web {% endcomment %}
+<script>
+    
+        // Product Variation
+        document.querySelectorAll(".choose-size").forEach(el => el.style.display = 'none');
+    
+        // Show size according to selected color
+        document.querySelectorAll(".choose-color").forEach(colorBtn => {
+            colorBtn.addEventListener('click', function() {
+                document.querySelectorAll(".choose-size").forEach(sizeBtn => sizeBtn.classList.remove('active'));
+                document.querySelectorAll(".choose-color").forEach(colorBtn => colorBtn.classList.remove('focused'));
+                this.classList.add('focused');
+    
+                var color = this.getAttribute('data-color');
+                document.querySelectorAll(".choose-size").forEach(sizeBtn => sizeBtn.style.display = 'none');
+                document.querySelectorAll(`.color${color}`).forEach(sizeBtn => {
+                    sizeBtn.style.display = 'block';
+                    sizeBtn.classList.add('active');
+                });
+    
+                var price = document.querySelector(`.color${color}`).getAttribute('data-price');
+                document.querySelector(".product-price").textContent = price;
+            });
+        });
+    
+        // Show the price according to selected size
+        document.querySelectorAll(".choose-size").forEach(sizeBtn => {
+            sizeBtn.addEventListener('click', function() {
+                document.querySelectorAll(".choose-size").forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+    
+                var price = this.getAttribute('data-price');
+                document.querySelector(".product-price").textContent = price;
+            });
+        });
+    
+        // Show the first selected color
+        var firstColor = document.querySelector(".choose-color");
+        firstColor.classList.add('focused');
+        var color = firstColor.getAttribute('data-color');
+        var price = document.querySelector(".choose-size").getAttribute('data-price');
+    
+        document.querySelectorAll(`.color${color}`).forEach(sizeBtn => {
+            sizeBtn.style.display = 'block';
+            sizeBtn.classList.add('active');
+        });
+    
+        document.querySelector(".product-price").textContent = price;
+    
+        // Add to cart
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('add-to-cart-btn')) {
+                var vm = event.target;
+                var index = vm.getAttribute('data-index');
+                
+                // Fetch values from input fields
+                var qty = document.querySelector(`.product-qty-${index}`).value;
+                var productId = document.querySelector(`.product-id-${index}`).value;
+                var productImage = document.querySelector(`.product-image-${index}`).value;
+                var productTitle = document.querySelector(`.product-title-${index}`).value;
+                var productPrice = document.querySelector(`.product-price-${index}`).textContent;
+                
+                // Validate quantity
+                if (!qty || qty <= 0) {
+                    alert('Please enter a valid quantity.');
+                    return;
+                }
+        
+                // Create XMLHttpRequest
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', `/add-to-cart?id=${productId}&image=${productImage}&qty=${qty}&title=${productTitle}&price=${productPrice}`, true);
+                xhr.responseType = 'json';
+        
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.querySelector(".cart-list").textContent = xhr.response.totalitems;
+                        vm.removeAttribute('disabled');
+                    } else {
+                        console.error('Failed to add to cart.');
+                    }
+                };
+        
+                xhr.onprogress = function() {
+                    vm.setAttribute('disabled', true);
+                };
+        
+                xhr.send();
+            }
+        });
+        
+        // Delete item from cart
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('delete-item')) {
+                var pId = event.target.getAttribute('data-item');
+                var vm = event.target;
+    
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', `/delete-from-cart?id=${pId}`, true);
+                xhr.responseType = 'json';
+    
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        document.querySelector(".cart-list").textContent = xhr.response.totalitems;
+                        vm.removeAttribute('disabled');
+                        document.querySelector("#cartList").innerHTML = xhr.response.data;
+                    }
+                };
+    
+                xhr.onprogress = function() {
+                    vm.setAttribute('disabled', true);
+                };
+    
+                xhr.send();
+            }
+        });
+    
+        // Update item from cart
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('update-item')) {
+                var pId = event.target.getAttribute('data-item');
+                var pQty = document.querySelector(`.product-qty-${pId}`).value;
+                var vm = event.target;
+    
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', `/update-cart?id=${pId}&qty=${pQty}`, true);
+                xhr.responseType = 'json';
+    
+                xhr.onload = function() {
+                    if (xhr.status === 200) {
+                        vm.removeAttribute('disabled');
+                        document.querySelector("#cartList").innerHTML = xhr.response.data;
+                    }
+                };
+    
+                xhr.onprogress = function() {
+                    vm.setAttribute('disabled', true);
+                };
+    
+                xhr.send();
+            }
+        });
+    
+        // Add wishlist
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('add-wishlist')) {
+                var pid = event.target.getAttribute('data-product');
+                var vm = event.target;
+    
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', `/add-wishlist?product=${pid}`, true);
+                xhr.responseType = 'json';
+    
+                xhr.onload = function() {
+                    if (xhr.status === 200 && xhr.response.bool === true) {
+                        vm.classList.add('disabled');
+                        vm.classList.remove('add-wishlist');
+                    }
+                };
+    
+                xhr.send();
+            }
+        });
+    
+        // Activate selected address
+        document.addEventListener('click', function(event) {
+            if (event.target.classList.contains('activate-address')) {
+                var aId = event.target.getAttribute('data-address');
+                var vm = event.target;
+    
+                var xhr = new XMLHttpRequest();
+                xhr.open('GET', `/activate-address?id=${aId}`, true);
+                xhr.responseType = 'json';
+    
+                xhr.onload = function() {
+                    if (xhr.status === 200 && xhr.response.bool === true) {
+                        document.querySelectorAll(".address").forEach(el => {
+                            el.classList.remove('shadow', 'border-secondary');
+                        });
+                        document.querySelector(`.address${aId}`).classList.add('shadow', 'border-secondary');
+    
+                        document.querySelectorAll(".check").forEach(el => el.style.display = 'none');
+                        document.querySelectorAll(".actbtn").forEach(el => el.style.display = 'block');
+    
+                        document.querySelector(`.check${aId}`).style.display = 'block';
+                        document.querySelector(`.btn${aId}`).style.display = 'none';
+                    }
+                };
+    
+                xhr.send();
+            }
+        });
+        
+    });
+    
+    
+</script>
+{% comment %} use for zoom pic in detail and add reviews {% endcomment %}
+
+
+<script>
+    function zoom(e){
+        var zoomer = e.currentTarget;
+        e.offsetX ? offsetX = e.offsetX : offsetX = e.touches[0].pageX
+        e.offsetY ? offsetY = e.offsetY : offsetX = e.touches[0].pageX
+        x = offsetX/zoomer.offsetWidth*100
+        y = offsetY/zoomer.offsetHeight*100
+        zoomer.style.backgroundPosition = x + '% ' + y + '%';
+      }
+</script>
+<script>    
+    document.getElementById("addForm").addEventListener("submit", function(e) {
+        e.preventDefault();
+
+        var xhr = new XMLHttpRequest();
+        xhr.open(this.method, this.action, true);
+        xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+        xhr.onreadystatechange = function() {
+            if (xhr.readyState === XMLHttpRequest.DONE && xhr.status === 200) {
+                var res = JSON.parse(xhr.responseText);
+                if (res.bool == true) {
+                    document.querySelector(".ajaxRes").innerHTML = 'Data has been added.';
+                    document.getElementById("reset").click();
+
+                    // Hide Button
+                    document.querySelector(".reviewBtn").style.display = 'none';
+
+                    // Create data for review
+                    var _html = '<blockquote class="blockquote text-right">';
+                    _html += '<small>' + res.data.review_text + '</small>';
+                    _html += '<footer class="blockquote-footer">' + res.data.user;
+                    _html += '<cite title="Source Title">';
+                    for (var i = 1; i <= res.data.review_rating; i++) {
+                        _html += '<i class="fa fa-star text-warning"></i>';
+                    }
+                    _html += '</cite>';
+                    _html += '</footer>';
+                    _html += '</blockquote>';
+                    _html += '<hr>';
+
+                    document.querySelector(".no-data").style.display = 'none';
+
+                    // Prepend Data
+                    var reviewList = document.querySelector(".review-list");
+                    reviewList.insertAdjacentHTML('afterbegin', _html);
+
+                    // Hide Modal
+                    var modal = document.getElementById("productReview");
+                    var modalInstance = bootstrap.Modal.getInstance(modal); // Assuming Bootstrap 5
+                    modalInstance.hide();
+
+                    // Avg Rating
+                    document.querySelector(".avg-rating").textContent = res.avg_reviews.avg_rating.toFixed(1);
+
+                    // Show alert
+                    alert("Your review has been submitted successfully!");
+                }
+            }
+        };
+
+        var formData = new FormData(this);
+        var params = new URLSearchParams(formData).toString();
+        xhr.send(params);
+    });
+</script>

@@ -1,0 +1,23 @@
+{% for product in data %}
+<div style="flex: 0 0 calc(33.3333% - 10px); max-width: calc(33.3333% - 10px); margin-bottom: 20px; padding-left: 5px; padding-right: 5px;"  class="product-box searching" >
+    <div style="box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075); border-radius: .25rem; overflow: hidden;">
+      <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.productattribute_set.first.image}}" style="width:280px; height:280px; " alt="{{product.title}}"></a>
+      <div style="padding: 10px;">
+        <h5 style="margin: 0;"><a href="/product/{{product.slug}}/{{product.id}}"  class="title-search" style="text-decoration: none; color: inherit;">{{product.title}}</a></h5>
+        <h6>Rs:<span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span></h6>
+      </div>
+      <div style="padding: 7.5px;">
+          <input type="hidden" value="1" style="width: 100%; padding: 3.75px 7.5px; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; border: 1px solid #ced4da; border-radius: .25rem;" class="form-control product-qty-{{product.id}}" id="productQty" />
+          <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
+          <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+          <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+                  <button style="padding: 2.5px 5px; font-size: .875rem; line-height: 1.5; border-radius: .2rem; color: blue;"  data-index="{{product.id}}"><i style="color:blue;" class="fa fa-shopping-cart"></i></button>
+                  <button style="padding: 2.5px 5px; font-size: .875rem; line-height: 1.5; border-radius: .2rem; color: red;" ><i style="color:red;" class="fa fa-heart"></i></button>
+                  <span style="float: right; font-size: .875rem; line-height: 1.5; color: #495057;">
+                      4.5/5
+                      <i style="color: #ffe234;" class="fa fa-star"></i>
+                  </span>
+          </div>
+    </div>
+</div>
+{% endfor %}

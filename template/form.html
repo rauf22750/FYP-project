@@ -1,0 +1,55 @@
+
+{% include "header.html" %}
+
+
+<body background="/static/new.jpg" style="background-position: fixed ; background-size: cover;
+ width: 100%; height: 100%; background-repeat: no-repeat" >
+ <div class="contact">
+    <form >
+        {% csrf_token %}
+        <div class="row">
+            <div class="column">
+                <input type="text" placeholder="Name*" name="Name" id="username" required
+                    oninvalid="this.setCustomValidity('please enter your name')"
+                    oninput="this.setCustomValidity('')">
+            </div>
+            <div class="column half">
+                <input type="email" placeholder="Email*" name="Email" id="mail" required
+                    oninvalid="this.setCustomValidity('please enter your email')"
+                    oninput="this.setCustomValidity('')">
+            </div>
+            <input type="text" name="detail" id="detail" placeholder="Ask any question"
+                oninvalid="this.setCustomValidity('please enter your message')"
+                oninput="this.setCustomValidity('')">
+                <button class="but" type="submit" onClick="sendmail()">Submit</button>
+        </div>
+    </form>
+    
+</div>
+</body>
+
+{% include "footer.html" %}
+
+<script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+</script>
+<script type="text/javascript">
+    (function(){
+            emailjs.init({
+                publicKey: "zFprCAdSwwcKSFDQ-",
+            });
+    })();
+</script>
+<script>
+    function sendmail(){
+        var params ={
+            from_name : document.getElementById("username").value,
+            email_id : document.getElementById("mail").value,
+            message : document.getElementById("detail").value,
+        }
+        console.log(params);
+          emailjs.send("service_ehcpcuq","template_v0wod7b",params).then(function(res){
+            alert("successful!" +res.status);
+           })
+        }
+</script>

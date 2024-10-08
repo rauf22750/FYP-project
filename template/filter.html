@@ -1,0 +1,169 @@
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+
+    .mb-4 {
+        margin-bottom: 1.5rem;
+    }
+
+    .border-bottom {
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    .pb-1 {
+        padding-bottom: 0.25rem;
+    }
+
+    .filter-card {
+        border: 1px solid #dee2e6;
+        border-radius: 0.25rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .filter-header {
+        padding: 0.75rem 1.25rem;
+        background-color: #f8f9fa;
+        border-bottom: 1px solid #dee2e6;
+        font-size: 1rem;
+        font-weight: 600;
+    }
+
+    .filter-body {
+        padding: 0.75rem 1.25rem;
+    }
+
+    .filter-item {
+        margin-bottom: 0.75rem;
+    }
+
+    .color-btn {
+        width: 20px;
+        height: 20px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.875rem;
+        border-radius: 0.2rem;
+        cursor: pointer;
+        background-color: #17a2b8;
+        color: #fff;
+        border: 1px solid #17a2b8;
+    }
+</style>
+</head>
+<body>
+<h3 class="mb-4 border-bottom pb-1">Filters</h3>
+
+<!-- Price Filter -->
+<div class="filter-card">
+    <h6 class="filter-header">Price</h6>
+    <div class="filter-body">
+        <div class="filter-item">
+            <input type="range" min="1" value="{{minMaxPrice.price__min}}" max="{{minMaxPrice.price__max}}" min="{{minMaxPrice.price__min}}" id="rangeInput" oninput="maxPrice.value=this.value" />
+            <p>{{minMaxPrice.price__min}} - {{minMaxPrice.price__max}}</p>
+        </div>
+        <div class="filter-item">
+            Max: <input type="number" value="{{minMaxPrice.price__min}}" max="{{minMaxPrice.price__max}}" min="{{minMaxPrice.price__min}}" id="maxPrice" onkeyup="rangeInput.value=this.value" />
+            <button id="priceFilterBtn" class="btn-sm">Filter</button>
+        </div>
+    </div>
+</div>
+
+<!-- Color Filter -->
+<div class="filter-card">
+    <h6 class="filter-header">Colors</h6>
+    <div class="filter-body">
+        {% for color in colors %}
+        <div class="filter-item">
+            <input class="filter-checkbox" data-filter="color" value="{{color.color__id}}" type="checkbox" />&nbsp;
+            <button class="color-btn" style="background-color: {{color.color__color_code}};"></button>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Category Filter -->
+<div class="filter-card">
+    <h6 class="filter-header">Categories</h6>
+    <div class="filter-body">
+        {% for cat in cats %}
+        <div class="filter-item">
+            <input class="filter-checkbox" data-filter="category" value="{{cat.category__id}}" type="checkbox" />&nbsp;
+            {{cat.category__title}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<!-- Brand Filter -->
+<div class="filter-card">
+    <h6 class="filter-header">Brands</h6>
+    <div class="filter-body">
+        {% for brand in brands %}
+        <div class="filter-item">
+            <input class="filter-checkbox" data-filter="brand" value="{{brand.brand__id}}" type="checkbox" />&nbsp;
+            {{brand.brand__title}}
+        </div>
+        {% endfor %}
+    </div>
+</div>
+
+<div id="filteredProducts"></div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        document.getElementById('priceFilterBtn').addEventListener('click', filterProducts);
+
+        document.querySelectorAll('.filter-checkbox').forEach(function(checkbox) {
+            checkbox.addEventListener('click', filterProducts);
+        });
+
+        document.getElementById('maxPrice').addEventListener('blur', function() {
+            var min = parseInt(this.getAttribute('min'));
+            var max = parseInt(this.getAttribute('max'));
+            var value = parseInt(this.value);
+
+            if (value < min || value > max) {
+                alert('Values should be ' + min + ' - ' + max);
+                this.value = min;
+                document.getElementById('rangeInput').value = min;
+            }
+        });
+
+        function filterProducts() {
+            var filterObj = {};
+            var minPrice = document.getElementById('maxPrice').getAttribute('min');
+            var maxPrice = document.getElementById('maxPrice').value;
+            filterObj.minPrice = minPrice;
+            filterObj.maxPrice = maxPrice;
+
+            document.querySelectorAll('.filter-checkbox').forEach(function(checkbox) {
+                var filterVal = checkbox.value;
+                var filterKey = checkbox.getAttribute('data-filter');
+                if (!filterObj[filterKey]) {
+                    filterObj[filterKey] = [];
+                }
+                if (checkbox.checked) {
+                    filterObj[filterKey].push(filterVal);
+                }
+            });
+
+            // Run Ajax
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', '/filter-data?' + new URLSearchParams(filterObj).toString(), true);
+            xhr.onload = function() {
+                if (xhr.status >= 200 && xhr.status < 400) {
+                    var res = JSON.parse(xhr.responseText);
+                    document.getElementById('filteredProducts').innerHTML = res.data;
+                }
+            };
+            xhr.send();
+        }
+    });
+</script>
+    

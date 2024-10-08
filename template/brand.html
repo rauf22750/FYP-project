@@ -1,0 +1,25 @@
+{% include "header.html" %}
+{% load static %}
+{% block content %}
+<main style="margin-top: 100px; margin-bottom: 1rem; max-width: 960px; padding: 0 1rem; margin-left: auto; margin-right: auto;">
+    <!-- Featured Products -->
+    <h3 style="margin-top: 1.5rem; margin-bottom: 1.5rem; border-bottom: 1px solid #dee2e6; padding-bottom: 0.25rem; font-size: 1.5rem; font-weight: bold; color: #333;">Brand</h3>
+    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); gap: 1rem;">
+        {% if data %}
+            {% for brand in data %}
+            <div style="box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075); border-radius: .25rem; overflow: hidden; background: #fff; transition: transform 0.3s, box-shadow 0.3s; cursor: pointer;">
+                <a href="/brand_product_list/{{brand.id}}" style="display: block;">
+                    <img src="/media/{{brand.image}}" style="width: 100%; height: 280px; object-fit: cover;" alt="{{brand.title}}" />
+                </a>
+                <div style="padding: 1rem;">
+                    <h6 style="margin: 0; font-size: 1.125rem;">
+                        <a href="/brand_product_list/{{brand.id}}" style="text-decoration: none; color: #333; transition: color 0.3s;">{{brand.title}}</a>
+                    </h6>
+                </div>
+            </div>
+            {% endfor %}
+        {% endif %}
+    </div>
+</main>
+{% endblock %}
+{% include "footer.html" %}

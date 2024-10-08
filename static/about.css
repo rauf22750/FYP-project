@@ -1,0 +1,147 @@
+ /* General styles */
+ body {
+    font-family: Arial, sans-serif;
+    color: black;
+    margin: 0;
+    padding: 0;
+	background-color:#dcdcdc;
+	height: 100%;
+    display: flex;
+    justify-content: center;
+    
+}
+.background-image {
+    width: 100%;
+    height: 100%;
+}
+.image{
+	height:auto;
+	max-width:100%;
+	margin-left:50%;
+	display: flex;
+    justify-content: flex-end;
+	float: right ;
+    margin: 20px;
+	padding-top:15%;
+
+}
+	
+.body{
+	position: absolute;
+    background: rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: left;
+    color: black;
+}
+
+
+.about {
+    width: 80%;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+	position: relative;
+  	        
+}
+
+/* Header styles */
+.header {
+    text-align: center;
+    padding: 2px 0;
+	
+}
+
+
+.header h1 {
+    font-size: 1.5em;
+    margin-bottom: 6%;
+    color: black;
+	animation:text 3s 1;
+	text-align:center;
+}
+
+.header p {
+    font-size: 1em;
+    color: black;
+	text-align:left;
+
+}
+
+
+/* Section styles */
+section {
+    margin: 40px 0;
+	
+}
+
+.section h2 {
+    font-size: 1.5em;
+    margin-bottom: 20px;
+    color: black;
+	text-align:center;
+}
+
+.section p {
+    margin-bottom: 20px;
+    line-height: 1.8;
+	font-size: 1.2em;
+}
+
+
+/* List styles */
+.ul {
+    list-style: none;
+    padding: 0;
+}
+
+.ul li {
+    background: url('bullet.png') no-repeat left center;
+    padding-left: 30px;
+    margin-bottom: 10px;
+	text-align:left;
+}
+
+/* Team section styles */
+.team {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: 40px 0;
+}
+
+.team-member {
+    flex: 1 1 30%;
+    text-align: center;
+    margin: 10px;
+    padding: 20px;
+    border:3px solid white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+}
+
+.team-member img {
+    border-radius: 50%;
+    margin-bottom: 10px;
+	height:40%;
+	width:20%;
+}
+
+.team-member h3 {
+    margin: 10px 0;
+    font-size: 1.5em;
+}
+
+.team-member p {
+    font-size: 1.2em;
+    color: solid black;
+	text-align:center;
+}
+
+
+
+/* Responsive styles */
+@media (max-width: 768px) {
+    .team {
+        flex-direction: column;
+    }
+}

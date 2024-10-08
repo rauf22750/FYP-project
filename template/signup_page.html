@@ -1,0 +1,183 @@
+<html>
+    <head>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+        <title>Signup Page</title>
+        <style>
+            body{
+                background-color: black;
+                margin: 0px;
+                padding: 0px;
+            }
+            .registerbox{
+                background-color: #e1dada;
+                display: flex;
+                height: 100vh;
+            }
+            .registerbody{
+                display: flex;
+                flex-direction: column;
+                margin: auto;
+                width: 500px;
+                height: 450px;
+                border-radius: 50px;
+                background-color: #d1d3dd;
+                text-align: center;
+                font-family: 'Courier New', Courier, monospace;
+                margin-left: 200px;
+            }
+            
+            .registerbody h1{
+                /* background-color: #d4d7e3; */
+                /* color: white; */
+                /* font-family: 'Courier New', Courier, monospace; */
+                font-size: 55px;
+            }
+            .registerbody form{
+                display: flex;
+                flex-direction: column;
+            }
+            .inputdiv{
+                /* background-color: aqua; */
+                background-color: white;
+                height: 50px;
+                display: flex;
+                /* flex-direction: row; */
+                justify-content: space-between;
+                width: 425px;
+                margin: auto;
+                margin-bottom: 15px;
+                border-radius: 50px;
+                border: none;
+            }
+            .inputdiv input{
+                /* margin: auto; */
+                width: 95%;
+                height: 95%;
+                border: none;
+                background-color: transparent;
+                outline: none;
+                font-family: 'Courier New', Courier, monospace;
+            }
+            
+            .inputdiv div{
+                /* background-color: blue; */
+                width: 50px;
+                display: flex;
+            }
+            .material-symbols-outlined {
+                margin: auto;
+                color: #292e47;
+              font-variation-settings:
+              'FILL' 0,
+              'wght' 400,
+              'GRAD' 0,
+              'opsz' 24
+            }
+            .loginbtn{
+                margin: auto;
+                margin-bottom: 15px;
+                width: 300px;
+                height: 50px;
+                border-radius: 50px;
+                background-color: #0e1111;
+                color: white;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 18px;
+                border: none;
+                outline: none;
+                transition: transform 100ms;
+            }
+            .registerbody button:hover{
+                cursor: pointer;
+                
+            }
+            .signupbtn{
+                margin: auto;
+                margin-bottom: 15px;
+                width: 300px;
+                height: 50px;
+                border-radius: 50px;
+                font-family: 'Courier New', Courier, monospace;
+                font-size: 18px;
+                border: none;
+                outline: none;
+                transition: transform 100ms;
+            }
+            .loginbtn:hover{
+                transform: scale(1.05);
+            }
+            .loginbtn:active{
+                transform : scale(0.8)
+            }
+            .signupbtn:active{
+                transform : scale(0.8)
+            }
+            .signupbtn:hover{
+                transform: scale(1.05);
+            }
+            @media screen and (max-width : 500px) {
+                .registerbody{
+                    width: 90%
+                }
+                .inputdiv{
+                    width: 90%;
+                }
+                .loginbtn{
+                    width: 50%;
+                }
+                .signupbtn{
+                    width: 50%;
+                }
+            }
+        </style>
+    </head>
+<body>
+    <center>
+        <h1 style="color:#ff0000;">{{error}}</h1>
+        <h1 style="color:#008000;">{{info}}</h1>
+    <center>
+    <div class="registerbox">
+        <img src="static/SignUp-Logo.png" width="400" height="200" style="margin-top:200px; margin-left:150px;">
+    <div class="registerbody" id="signupbody"  style="height: auto;" >
+        <h1 style="margin-bottom: 10px">Signup</h1>
+        <form  method="POST" action="#">
+            {% csrf_token %}
+            <div class="inputdiv">
+                <div>
+                    <span class="material-symbols-outlined">mail</span>
+                </div>
+                <input type="text"  placeholder="username" required name="name" >
+            </div>
+            <div class="inputdiv">
+                <div>
+                    <span class="material-symbols-outlined">mail</span>
+                </div>
+                <input type="email"  placeholder="Email" required name="email" >
+            </div>
+            <div class="inputdiv">
+                <div>
+                    <span class="material-symbols-outlined">password</span>
+                </div>
+                <input type="password"  placeholder="password" required name="password1">
+            </div>
+            <div class="inputdiv">
+                <div>
+                    <span class="material-symbols-outlined">password</span>
+                </div>
+                <input type="password"  placeholder="confirm password" required name="password2" >
+            </div>
+            <button type="submit" class="loginbtn">Signup</button>
+            <button type="button" class="signupbtn"><a href="http://127.0.0.1:8000/login/">Login</a></button>
+        </form>
+    </div>
+</div>
+</body>
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,170 @@
+{% include "header.html" %}
+
+{% load static %}
+{% block content %}
+
+<main style="max-width: 1000px; margin: 20px auto; padding: 20px;">
+
+    <!-- Featured Products -->
+    <h3 style="margin-top:50px; margin-bottom: 20px; padding-bottom: 5px; border-bottom: 2px solid #ddd;">{{data.title}}</h3>
+    <div style="display: flex; flex-wrap: wrap;">
+        <!-- Images -->
+        <div style=" min-width: 100px; padding: 10px;">
+            <figure class="zoom" onmousemove="zoom(event)" style="width:170px; height:170px; background-image: url(/media/{{data.productattribute_set.first.image}})">
+                <img style="width:170px; height:170px" src="/media/{{data.productattribute_set.first.image}}">
+            </figure>
+        </div> 
+        <div style="flex: 2; min-width: 300px; padding: 10px;">
+            <p>{{data.detail}}</p>
+            <hr/>
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="text-align: left; border: 1px solid #ddd; padding: 8px;">Colors</th>
+                    <td style="border: 1px solid #ddd; padding: 8px;">
+                        {% for color in colors %}
+                            <button style="width: 30px; height: 30px; margin-right: 5px; background-color: {{color.color__color_code}}; border: none;" data-color="{{color.color__id}}"></button>
+                        {% endfor %}
+                    </td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; border: 1px solid #ddd; padding: 8px;">Price</th>
+                    <th style="border: 1px solid #ddd; padding: 8px;">Rs: <span class="product-price-{{data.id}}">{{data.productattribute_set.first.price}}</span></th>
+                </tr>
+            </table>
+            <hr/>
+
+            <form method="POST" action="{% url 'add_to_cart' %}">
+                {% csrf_token %}
+                <input type="hidden" name="product_id" value="{{ data.id }}">
+                <input type="number" name="quantity" value="1" min="1">
+                <button type="submit">Add to Cart</button>
+            </form>
+                    
+        </div>
+    </div>
+    <hr/>
+    <div style="display: flex; flex-wrap: wrap;">
+        <div style="flex: 1; min-width: 300px; padding: 10px;">
+            <h3 style="margin-bottom: 20px;">Detail</h3>
+            <!-- Detail -->
+            <table style="width: 100%; border-collapse: collapse;">
+                <tr>
+                    <th style="text-align: left; border: 1px solid #ddd; padding: 8px;">Brand</th>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><p href="/brand-product-list/{{data.brand.id}}">{{data.brand.title}}</p></td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; border: 1px solid #ddd; padding: 8px;">Category</th>
+                    <td style="border: 1px solid #ddd; padding: 8px;"><p href="/category-product-list/{{data.category.id}}">{{data.category.title}}</p></td>
+                </tr>
+                <tr>
+                    <th style="text-align: left; border: 1px solid #ddd; padding: 8px;">Specification</th>
+                    <td style="border: 1px solid #ddd; padding: 8px;">{{data.specs}}</td>
+                </tr>
+            </table>
+        </div>
+         <!-- Reviews -->
+        <div style="flex: 1; min-width: 300px; padding: 10px;">
+            <h3 style="margin-bottom: 20px;">Reviews : <span class="avg-rating">{{ avg_reviews.avg_rating|floatformat:1 }}</span>/5 <i style="color: #ffe234;" class="fa fa-star text-warning"></i>
+                {% if user.is_authenticated %}
+                {% if canAdd %}
+                <button style="float: right; padding: 5px 10px; background-color: #ffc107; color: black; border: none;" data-toggle="modal" data-target="#productReview" type="button" class="reviewBtn">Add Review</button>
+                {% endif %}
+                {% endif %}
+            </h3>
+            {% if user.is_authenticated %}
+            <!-- Product Review -->
+            <div class="modal fade" id="productReview" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-body">
+                            <form method="post" id="addForm" action="{% url 'save-review' data.id %}">
+                                {% csrf_token %}
+                                <table style="width: 100%; border-collapse: collapse;">
+                                    {{reviewForm.as_table}}
+                                    <tr>
+                                        <td colspan="2" style="padding: 10px;">
+                                            <button type="submit" style="padding: 10px; background-color: #007bff; color: white; border: none;">Submit</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                                <p class="ajaxRes"></p>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Product Review End -->
+            {% endif %}
+            <div style="border: 1px solid #ddd; border-radius: 5px; overflow: hidden;">
+                <div style="padding: 0px; max-height: 200px; overflow-y: auto;">
+                    <!-- Detail -->
+                    {% if reviews %}
+                        {% for review in reviews %}
+                        <blockquote style="text-align: right; border-left: 3px solid #eee; margin: 20px; padding-left: 10px;">
+                            <footer style="height:60px; margin-top:0px;">
+                            <small>{{review.review_text}}</small>
+                            {{review.user}}
+                                <cite>
+                                    {% for star in review.review_rating|ljust:review.review_rating %}
+                                    <i style="color: #ffe234;" class="fa fa-star"></i>
+                                    {% endfor %}
+                                </cite>
+                            </footer>
+                        </blockquote>
+                        <hr />
+                        {% endfor %}
+                    {% else %}
+                        <p style="color: #888;">Add First Review</p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Related Products -->
+    <h3 style="margin-top: 40px; margin-bottom: 30px; padding-bottom: 5px; border-bottom: 2px solid #ddd;">Related Products</h3>
+    <div style="display: flex; flex-wrap: wrap;">
+        {% for product in related %}
+        <div style=" min-width: 300px; padding: 10px; margin-bottom: 100px;">
+            <div style="border: 1px solid #ddd; border-radius: 5px; overflow: hidden; box-shadow: 0px 0px 5px rgba(0,0,0,0.1);">
+                <a href="/product/{{product.slug}}/{{product.id}}">
+                    <img src="/media/{{product.productattribute_set.first.image}}" style="width: 280px; height: 280px;" alt="{{product.title}}">
+                </a>
+                <div style="padding: 10px;">
+                    <h6 style="margin: 0;"><a href="/product/{{product.slug}}/{{product.id}}" style="text-decoration: none; color: black;">{{product.title}}</a></h6>
+                </div>
+                <div style="padding: 10px; background-color: #f8f9fa;">
+                    <button style="padding: 5px 10px; background-color: #007bff; color: white; border: none; margin-right: 5px;"><i class="fa fa-shopping-cart"></i></button>
+                    <button style="padding: 5px 10px; background-color: #dc3545; color: white; border: none;"><i class="fa fa-heart"></i></button>
+                    <span style="float: right;">
+                        4.5/5
+                        <i style="color: #ffe234;" class="fa fa-star text-warning"></i>
+                    </span>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+<script>
+    fetch('/add_to_cart/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': csrfToken // Make sure to include the CSRF token
+        },
+        body: JSON.stringify({
+            product_id: productId,
+            quantity: quantity
+        })
+    }).then(response => {
+        if (response.ok) {
+            window.location.href = '/cart/';
+        } else {
+            console.error('Failed to add item to cart.');
+        }
+    });
+    
+</script>
+{% endblock %}
+{% include "footer.html" %}
+

@@ -1,0 +1,136 @@
+
+{% include "header.html" %}
+<div id="slider" >
+  <figure>
+    
+    <img src="/static/main.png">
+    <img src="/static/new.jpg">
+    <img src="/static/ma.jpg">
+    <img src="/static/mac.jpg">
+  </figure>
+</div>
+  <div style="flex: 0 0 80%; max-width: 80%; margin-left:10%;">
+    <!-- Products -->
+    <h2 style="margin-top: 30px; margin-bottom: 30px; border-bottom: 1px solid #ccc; padding-bottom: 5px; text-align:center;">
+      Features Products
+    </h2>
+    <div style="display: flex; flex-wrap: wrap;" id="filteredProducts" >
+      {% for product in data %}
+      <div style="flex: 0 0 calc(33.3333% - 10px); max-width: calc(33.3333% - 10px); margin-bottom: 20px; padding-left: 5px; padding-right: 5px;" class="product-box searching">
+        <div style="box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075); border-radius: .25rem; overflow: hidden;">
+          <a href="/product/{{product.slug}}/{{product.id}}"><img src="/media/{{product.productattribute_set.first.image}}" style="width:280px; height:280px;" alt="{{product.title}}"></a>
+          <div style="padding: 10px;">
+            <h5 style="margin: 0;"><a href="/product/{{product.slug}}/{{product.id}}" style="text-decoration: none; color: inherit;">{{product.title}}</a></h5>
+            <h6>Rs: <span class="product-price-{{product.id}}">{{product.productattribute_set.first.price}}</span></h6>
+          </div>
+          <div style="padding: 7.5px;">
+                <input type="hidden" value="1" style="width: 100%; padding: 3.75px 7.5px; font-size: 1rem; line-height: 1.5; color: #495057; background-color: #fff; border: 1px solid #ced4da; border-radius: .25rem;" class="form-control product-qty-{{product.id}}" id="productQty" />
+                <input type="hidden" class="product-image-{{product.id}}" value="{{product.productattribute_set.first.image}}" />
+                <input type="hidden" class="product-id-{{product.id}}" value="{{product.id}}" />
+                <input type="hidden" class="product-title-{{product.id}}" value="{{product.title}}" />
+                <button style="padding: 2.5px 5px; font-size: .875rem; line-height: 1.5; border-radius: .2rem; color: blue;" data-index="{{product.id}}"><i style="color:blue;" class="fa fa-shopping-cart"></i></button>
+                <button style="padding: 2.5px 5px; font-size: .875rem; line-height: 1.5; border-radius: .2rem; color: red;"><i style="color:red;" class="fa fa-heart"></i></button>
+                <span style="float: right; font-size: .875rem; line-height: 1.5; color: #495057;">
+                  4.5/5
+                  <i style="color: #ffe234;" class="fa fa-star"></i>
+                </span>
+            </div>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+<p style="margin-top: 100px; margin-bottom: 10px; text-align: center;">
+        <a href="{% url 'product' %}" style="background-color: #343a40; color: #fff; padding: .25rem .5rem; font-size: .875rem; border-radius: .2rem; text-decoration: none; display: inline-block;">
+            All Products 
+            <i class="fa fa-long-arrow-alt-right"></i>
+        </a>
+</p>
+  <div class="speed">
+    <h1><b style="font-size: 40px;">Silicone case<br> MagSafe.<br></b>
+      Snap on a case, wallet, wireless support case,<br> Transparent case<br></h1>
+  </div>
+  <section class="product-iphone">
+    <div class="container">
+      <h2 class="searching">IPhone silicone case </h2>
+      <div class="grid">
+        <div class="grid-product">
+          <img src="/static/sili.jpg">
+          <div class="grid-detail">
+            <p>iPhone silicone case All models</p>
+            <p>From Rs 1000/-</p>
+            <button style="width: 80px;background-color: rgb(133, 175, 209);border-radius: 7px;padding: 5px; margin-top: 15px;" onclick="welcome()">BUY</button>
+          </div>
+        </div>
+        
+        <div class="grid-product">
+          <img src="/static/rain.jpg">
+          <div class="grid-detail">
+            <p>iphone silicone rainbow case</p>
+            <p>From Rs 1500/-</p>
+            <button style="width: 80px;background-color: rgb(133, 175, 209);border-radius: 7px;padding: 5px; margin-top: 15px;" onclick="welcome()" >BUY</button>
+          </div>
+        </div>
+        
+        <div class="grid-product">
+          <img src="/static/trn.png">
+          <div class="grid-detail">
+            <p>iPhone transparent pouches</p>
+            <p>From Rs 1700/-</p>
+            <button style="width: 80px;background-color: rgb(133, 175, 209);border-radius: 7px;padding: 5px; margin-top: 15px;" onclick="welcome()">BUY</button>
+          </div>
+        </div>
+
+      </div> <!--end grid-->
+    </div> <!--end container-->
+  </section>
+  <p style="margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
+    <a href="{% url 'product' %}" style="background-color: #343a40; color: #fff; padding: .25rem .5rem; font-size: .875rem; border-radius: .2rem; text-decoration: none; display: inline-block;">
+        All Products 
+        <i class="fa fa-long-arrow-alt-right"></i>
+    </a>
+</p>
+  <div class="iphone">
+    <h1><b>IPHONE. </b><br>Best Selling Products</h1>
+  </div>
+  <section class="product-ipad">
+    <div class="container">
+      <h2 class="searching">iphone protection</h2>
+      <div class="grid-full">
+        <div class="grid-product">
+          <img src="/static/pro f.png">
+          <div class="grid-detail">
+            <p>iphone protector</p>
+            <p>Form Rs 500/-</p>
+            <button style="width: 80px;background-color: rgb(133, 175, 209);border-radius: 7px;padding: 5px; margin-top: 15px;" onclick="welcome()">BUY</button>
+          </div>
+        </div>
+        <div class="grid-product">
+          <img src="/static/lens.jpg">
+          <div class="grid-detail">
+            <p>iphone camera lens</p>
+            <p>Form Rs 350/-</p>
+            <button style="width: 80px;background-color: rgb(133, 175, 209);border-radius: 7px;padding: 5px; margin-top: 15px;" onclick="welcome()">BUY</button>
+          </div>
+        </div>
+        <div class="grid-product">
+          <img src="/static/she.png">
+          <div class="grid-detail">
+            <p>iphone backsheet</p>
+            <p>Form Rs 500/-</p>
+            <button style="width: 80px;background-color: rgb(133, 175, 209);border-radius: 7px;padding: 5px; margin-top: 15px;" onclick="welcome()">BUY</button>
+          </div>
+        </div>
+  </section>
+  <p style="margin-top: 1rem; margin-bottom: 1rem; text-align: center;">
+    <a href="{% url 'product' %}" style="background-color: #343a40; color: #fff; padding: .25rem .5rem; font-size: .875rem; border-radius: .2rem; text-decoration: none; display: inline-block;">
+        All Products 
+        <i class="fa fa-long-arrow-alt-right"></i>
+    </a>
+</p>
+</div> 
+
+</body>
+</html>
+
+{% include "footer.html" %}

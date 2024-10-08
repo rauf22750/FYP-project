@@ -1,0 +1,25 @@
+{% include "header.html" %}
+{% load static %}
+{% block content %}
+<main  style="margin-top: 100px; margin-bottom: 1rem; max-width: 960px; padding-left: 1rem; padding-right: 1rem; margin-left: auto; margin-right: auto;">
+
+	<!-- Featured Products -->
+	<h3 style="margin-top: 1rem; margin-bottom: 1rem; border-bottom: 1px solid #dee2e6; padding-bottom: .25rem;">Categories</h3>
+	<div style="display: flex; flex-wrap: wrap; margin-left: -0.5rem; margin-right: -0.5rem;" >
+		{% if data %}
+			{% for cat in data %}
+			<div class="searching" style="width: 280px; max-width: 280px; padding-left: 0.5rem; padding-right: 0.5rem; margin-bottom: 1rem;">
+				<div style="box-shadow: 0 .125rem .25rem rgba(0, 0, 0, .075); border-radius: .25rem; overflow: hidden;">
+					<a href="/category_product_list/{{cat.id}}"><img src="/media/{{cat.image}}" style="width: 280px; height: 280px;" alt="{{cat.title}}" /></a>
+					<div style="padding: 1rem;">
+						<h6 style="margin: 0;"><a href="/category_product_list/{{cat.id}}" style="text-decoration: none; color: inherit;">{{cat.title}}</a></h6>
+					</div>
+				</div>
+			</div>
+			{% endfor %}
+		{% endif %}
+	</div>
+</main>
+{% endblock %}
+{% include "footer.html" %}
+                                                

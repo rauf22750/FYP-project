@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.3.0/css/all.min.css" />
+    <title>About Us</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            margin: 0;
+            background-color: #f4f4f4;
+        }
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+            *{
+                padding: 0;
+                margin: 0;
+                box-sizing: border-box;
+                font-family: poppins;
+            }
+            #about-section {
+                width: 100%;
+                height: auto;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 80px 12%;
+            }
+            .about-left img{
+                margin-left: 0%;
+                width: 420px;
+                height: auto;
+                transform: translateY(50px);
+            }
+            .about-right {
+                width: 54%;
+                margin-top:20px;
+            }
+
+            .about-right ul li {
+                display: flex;
+                align-items: center;
+            }
+
+            .about-right h1 {
+                color:black;
+                font-size: 37px;
+                margin-bottom: 5px;
+            }
+
+            .about-right p {
+                color: #444;
+                line-height: 26px;
+                font-size: 15px;
+            }
+
+            .about-right .address {
+                margin: 25px 0;
+            }
+
+            .about-right .address ul li {
+                margin-bottom: 5px;
+            }
+
+            .address .address-logo {
+                margin-right: 15px;
+                color: black;
+            }
+
+            .address .saprater {
+                margin: 0 35px;
+            }
+
+            .about-right .expertise ul {
+                width: 80%;
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+
+            .expertise h3 {
+                margin-bottom: 10px;
+            }
+
+            .expertise .expertise-logo {
+                font-size: 19px;
+                margin-right: 10px;
+                color: black;
+            }
+
+        .column {
+            float: left;
+            width: 32%;
+            margin-bottom: 16px;
+            padding: 0 8px;
+            margin-left: 12.5px;
+        }
+        
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            margin: 8px;
+            background-color: #fff;
+        }
+        .ceo {
+          padding: 16px;
+        }
+      
+        .ceo::after, .row::after {
+          content: "";
+          clear: both;
+          display: table;
+        }
+        .ceo img {
+          border-radius: 50%;
+          margin-bottom: 10px;
+          height:40%;
+          width:20%;
+        }
+                
+        .title {
+            color: grey;
+        }
+        
+        .button {
+            border: none;
+            outline: 0;
+            display: inline-block;
+            padding: 8px;
+            color: white;
+            background-color: #000;
+            text-align: center;
+            cursor: pointer;
+            width: 100%;
+        }
+        
+        .button:hover {
+            background-color: #555;
+        }
+      
+      .CEO {
+          flex: 1 1 30%;
+          text-align: center;
+          margin: 10px;
+          padding: 20px;
+      }
+      
+      .CEO img {
+          border-radius: 50%;
+          margin-bottom: 10px;
+          height:20%;
+          width:20%;
+      }
+      
+      .CEO p {
+          font-size: 1.2em;
+          color: solid black;
+          text-align:center;
+      }
+      
+      /* Responsive styles */
+      @media (max-width: 400px) {
+          .team {
+              flex-direction: column;
+          }
+      }
+    </style>
+</head>
+<body>
+    {% include "header.html" %}
+    <section id="about-section">
+        <!-- about left  -->
+        <div class="about-left">
+            <img src="/static/logo1.png" alt="About Img"/>
+        </div>
+
+        <!-- about right  -->
+        <div class="about-right">
+            <h4>Welcome to RM Mobile hub</h4>
+            <h1>About us</h1>
+            <p> At [RM Mobile Hub], we are passionate about enhancing your mobile experience
+                with top-quality accessories that blend style, functionality, and innovation.
+                Our mission is to become your go-to destination for all your mobile accessory needs.
+                We offer a wide range of mobile accessories, including:
+            </p>
+            <div class="address">
+                <ul>
+                    <li>
+                        <span class="address-logo">
+                            <i class="fas fa-paper-plane"></i>
+                        </span>
+                        <p>Warehouse Address</p>
+                        <span class="saprater">:</span>
+                        <p>house # 67 nawab town raiwand road lahore</p>
+                    </li>
+                    <li>
+                        <span class="address-logo">
+                            <i class="fas fa-phone-alt"></i>
+                        </span>
+                        <p>Phone No</p>
+                        <span class="saprater">:</span>
+                        <p>+923274450102</p>
+                    </li>
+                    <li>
+                        <span class="address-logo">
+                            <i class="far fa-envelope"></i>
+                        </span>
+                        <p>Email ID</p>
+                        <span class="saprater">:</span>
+                        <p>rmmobilehub@gmail.com</p>
+                    </li>
+                </ul>
+            </div>
+            <div class="expertise">
+                <h3>Over pages</h3>
+                <ul>
+                    <li>
+                        <span class="expertise-logo">
+                        <i style="color:#3b5998" class="fa-brands fa-facebook-f"></i>
+                        </span>
+                        <a target="_blank"  href="https://www.facebook.com/profile.php?id=61555402063058"><p>Facebook</p></a>
+                    </li>
+                    <li>
+                        <span class="expertise-logo">
+                            <i style="color:#DD2A7B" class="fa-brands fa-instagram"></i>
+                        </span>
+                        <a target="_blank"  href="https://www.instagram.com/rmmobilehub/"><p>Instagram</p></a>
+                    </li>
+                    <li>
+                        <span class="expertise-logo">
+                            <a><i style="color:red" class="fa-brands fa-youtube"></i>
+                        </span>
+                        <a target="_blank"  href="https://www.youtube.com/channel/UCwYGcF0T2Fg0958T3DXCykg"><p>Youtube</p></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+
+    <br><h1 style="text-align:center">Our Team</h1></br>
+    <div class="row">
+      <div class="CEO">
+        <img src="/static/ra.jpg" alt="Team Member 1">
+        <div class="ceo">
+        <h2>Abdul Rauf</h2>
+        <p class="title">CEO & Founder</p>
+        <p>Customer satisfaction is our first priority ❤</p>
+        <p>rauf22750@gmail.com</p>
+        <p><a class="button" target="_blank" href="https://Wa.me/+923019836585">Contact</a></p>
+        </div>
+      </div>
+        <div class="column">
+            <div class="card">
+                <img src="/static/wo.jpeg" alt="Tuba Shahzaid" style="width:100%">
+                <div class="ceo">
+                    <h2>Tuba Shahzad</h2>
+                    <p class="title">Marketing Manager</p>
+                    <p>We deal with all types of brand launches in the market.</p>
+                    <p>tubashazad830@gmail.com</p>
+                    <p><a class="button" target="_blank" href="https://Wa.me/+923344529716">Contact</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <img src="/static/me.png" alt="Sayed Mohsin" style="width:100%">
+                <div class="ceo">
+                    <h2>Sayed Mohsin</h2>
+                    <p class="title">Head of Design</p>
+                    <p>Designing and manufacturing products based on customer demand.</p>
+                    <p>mohsin898@gmail.com</p>
+                    <p><a class="button" target="_blank" href="https://Wa.me/+923164667898">Contact</a></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="column">
+            <div class="card">
+                <img src="/static/wo.jpeg" alt="Iman Ali" style="width:100%">
+                <div class="ceo">
+                    <h2>Iman Ali</h2>
+                    <p class="title">Our Documentary</p>
+                    <p>We deal in all ways whose customers understand easily</p>
+                    <p>imanali1823@gmail.com</p>
+                    <p><a class="button" target="_blank" href="https://Wa.me/+923056312226">Contact</a></p>
+                </div>
+            </div>
+         </div>
+        </div>
+    
+</body>
+
+{% include "footer.html" %}
+
+
+
+
+
+
+
+
+
+
+
